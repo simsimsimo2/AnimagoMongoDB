@@ -11,6 +11,8 @@ import Login from '../public/img/login.png';
 import Cart from '../public/img/cart.png';
 import PanierPanneau from '@/pages/AchatsPanier/PanierPanneau';
 
+import Carousel from './Carousel';
+
 export default function Header() {
   const [query, setQuery] = useState('');
   const router = useRouter();
@@ -85,6 +87,8 @@ export default function Header() {
           </div>
         </div>
         <div className={styles.header2}>
+
+          <div>
           <div className={styles.catchPhrase}>
             <a onClick={() => router.push('https://facebook.com')}>
               <Image
@@ -113,6 +117,12 @@ export default function Header() {
             <p className={styles.p}>
               Vos articles préférés pour vos animaux préférés.
             </p>
+          </div>
+          <div className={styles.cacher}>
+            <p className={styles.pV2}>Nos nouveautés</p>
+            <Carousel/>
+          </div>
+
           </div>
           <div
             className={`${styles.menuLogo} ${

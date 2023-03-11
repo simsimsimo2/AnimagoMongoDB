@@ -180,6 +180,19 @@
   display: inline-block;
 }
 
+.cacher{
+  display: flex;
+  flex-direction: column;
+  max-width: 75rem;
+}
+
+.pV2{
+  font-size: 25px;
+  color: rgb(254, 59, 0);
+  font-family: 'Helvetica';
+  font-weight: bold;
+}
+
 @media (max-width: 550px) {
   .loginCart {
     width: 25px;
@@ -199,5 +212,9 @@
   .iconReseaux {
     width: 25px;
     min-width: 25px;
+  }
+
+  .cacher{
+    display: none;
   }
 }
