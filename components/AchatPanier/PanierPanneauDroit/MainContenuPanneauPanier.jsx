@@ -2,9 +2,8 @@ import React from 'react';
 import styles from '/styles/Cart.module.css';
 import ContenuPanneauPanier from '/components/AchatPanier/PanierPanneauDroit/ContenuPanneauPanier';
 import TotalAchatQuantite from '/components/MagasinCalcul/TotalAchatQuantite';
-import TotalAchatParItemResultat from '/components/MagasinCalcul/TotalAchatParItemResultat';
 
-const MainContenuPanneauPanier = (props) => {
+const MainTouteComponentPanier = (props) => {
   const {
     cart,
     handleChange,
@@ -15,7 +14,12 @@ const MainContenuPanneauPanier = (props) => {
     getRemainingStock,
     getPurchaseQuantity,
     setCart,
+    totalPriceInCart,
+    setOrders,
+    orders,
+    totalItemPurchase,
   } = props;
+
   return (
     <div className={styles.containerLayout}>
       <section className={styles.section}>
@@ -30,10 +34,14 @@ const MainContenuPanneauPanier = (props) => {
           getRemainingStock={getRemainingStock}
           getPurchaseQuantity={getPurchaseQuantity}
           setCart={setCart}
+          totalPriceInCart={totalPriceInCart}
+          setOrders={setOrders}
+          orders={orders}
+          totalItemPurchase={totalItemPurchase}
         />
       </section>
     </div>
   );
 };
 
-export default MainContenuPanneauPanier;
+export default MainTouteComponentPanier;

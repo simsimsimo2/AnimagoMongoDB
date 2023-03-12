@@ -2,21 +2,18 @@ import React from 'react';
 import ProduitListeMappingPanier from './ProduitListeMappingPanier';
 import GrandTotalMontantResultat from './GrandTotalMontantResultat';
 import GrandTotalItemResultat from './GrandTotalItemResultat';
-import CheckoutBtn from './CheckoutBtn';
 import PanierTitreMessage from './PanierTitreMessage';
-import TotalAchatParItemResultat from '/components/MagasinCalcul/TotalAchatParItemResultat';
 
 export default function ListeItemPanier(props) {
   const {
-    orders,
     cart,
     handleChange,
     removeFromCart,
-    calculateTotal,
-    submitCheckout,
     getRemainingStock,
     getPurchaseQuantity,
     setCart,
+    totalPriceInCart,
+    totalItemPurchase,
   } = props;
 
   return (
@@ -30,16 +27,9 @@ export default function ListeItemPanier(props) {
         removeFromCart={removeFromCart}
         setCart={setCart}
       />
-      <GrandTotalMontantResultat
-        total={<TotalAchatParItemResultat cart={cart} />}
-      />
+      <GrandTotalMontantResultat totalPriceInCart={totalPriceInCart} />
       <div>
-        <GrandTotalItemResultat calculateTotal={calculateTotal} />
-        <CheckoutBtn
-          submitCheckout={submitCheckout}
-          calculateTotal={calculateTotal}
-          total={<TotalAchatParItemResultat cart={cart} />}
-        />
+        <GrandTotalItemResultat totalItemPurchase={totalItemPurchase} />
       </div>
     </>
   );

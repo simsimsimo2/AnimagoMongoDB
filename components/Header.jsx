@@ -12,6 +12,7 @@ import Cart from '../public/img/cart.png';
 import PanierPanneau from '@/pages/AchatsPanier/PanierPanneau';
 
 import Carousel from './Carousel';
+import ProductCarousel from './ProductCarousel';
 
 export default function Header() {
   const [query, setQuery] = useState('');
@@ -87,42 +88,40 @@ export default function Header() {
           </div>
         </div>
         <div className={styles.header2}>
-
-          <div>
-          <div className={styles.catchPhrase}>
-            <a onClick={() => router.push('https://facebook.com')}>
-              <Image
-                src={facebook}
-                alt={'lien pour facebook' || 'Default Image'}
-                className={styles.iconReseaux}
-                priority={true}
-              />
-            </a>
-            <a onClick={() => router.push('https://instagram.com')}>
-              <Image
-                src={instagram}
-                alt={'lien pour instagram' || 'Default Image'}
-                className={styles.iconReseaux}
-                priority={true}
-              />
-            </a>
-            <a onClick={() => router.push('https://youtube.com')}>
-              <Image
-                src={youtube}
-                alt={'lien pour twitter' || 'Default Image'}
-                className={styles.iconReseaux}
-                priority={true}
-              />
-            </a>
-            <p className={styles.p}>
-              Vos articles préférés pour vos animaux préférés.
-            </p>
-          </div>
-          <div className={styles.cacher}>
-            <p className={styles.pV2}>Nos nouveautés</p>
-            <Carousel/>
-          </div>
-
+          <div className={styles.headerCarousel}>
+            <div className={styles.catchPhrase}>
+              <a onClick={() => router.push('https://facebook.com')}>
+                <Image
+                  src={facebook}
+                  alt={'lien pour facebook' || 'Default Image'}
+                  className={styles.iconReseaux}
+                  priority={true}
+                />
+              </a>
+              <a onClick={() => router.push('https://instagram.com')}>
+                <Image
+                  src={instagram}
+                  alt={'lien pour instagram' || 'Default Image'}
+                  className={styles.iconReseaux}
+                  priority={true}
+                />
+              </a>
+              <a onClick={() => router.push('https://youtube.com')}>
+                <Image
+                  src={youtube}
+                  alt={'lien pour twitter' || 'Default Image'}
+                  className={styles.iconReseaux}
+                  priority={true}
+                />
+              </a>
+              <p className={styles.p}>
+                Vos articles préférés pour vos animaux préférés.
+              </p>
+            </div>
+            <div className={styles.cacher}>
+              <p className={styles.pV2}>Nos nouveautés</p>
+              <ProductCarousel />
+            </div>
           </div>
           <div
             className={`${styles.menuLogo} ${

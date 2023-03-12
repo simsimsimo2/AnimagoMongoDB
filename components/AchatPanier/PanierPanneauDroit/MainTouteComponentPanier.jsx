@@ -4,7 +4,6 @@ import Toggler from '/components/Toggler';
 import PanierPanneauHeader from '/components/AchatPanier/PanierPanneauDroit/PanierPanneauHeader';
 import MainContenuPanneauPanier from '/components/AchatPanier/PanierPanneauDroit/MainContenuPanneauPanier';
 import PanierPanneauFooter from '/components/AchatPanier/PanierPanneauDroit/PanierPanneauFooter';
-import TotalAchatParItemResultat from '/components/MagasinCalcul/TotalAchatParItemResultat';
 
 const MainTouteComponentPanier = ({
   cart,
@@ -17,6 +16,8 @@ const MainTouteComponentPanier = ({
   getRemainingStock,
   getPurchaseQuantity,
   setCart,
+  totalPriceInCart,
+  totalItemPurchase,
 }) => {
   return (
     <Toggler visible>
@@ -36,6 +37,8 @@ const MainTouteComponentPanier = ({
             getRemainingStock={getRemainingStock}
             getPurchaseQuantity={getPurchaseQuantity}
             setCart={setCart}
+            totalPriceInCart={totalPriceInCart}
+            totalItemPurchase={totalItemPurchase}
           />
         </div>
         <PanierPanneauFooter router={router} />
