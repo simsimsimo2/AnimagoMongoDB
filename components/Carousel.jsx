@@ -36,7 +36,7 @@ const items = [
 function Carousel() {
     return (
         <div className={styles.carouselImg}>
-            <AliceCarousel mouseTracking autoWidth autoPlay infinite autoPlayInterval="4000" items={items}/>
+            <AliceCarousel autoWidth autoPlay infinite autoPlayInterval="4000" items={items}/>
         </div>
     )
 }
