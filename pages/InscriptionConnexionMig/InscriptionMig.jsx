@@ -1,25 +1,45 @@
 import { Inter } from '@next/font/google';
 const inter = Inter({ subsets: ['latin'] });
 import styles from '/styles/Inscription.module.css';
-//import { getUsers } from '/server/config/mongo/users';
 import ConfirmPassword from '/components/Inscription/ConfirmPassword';
 import BoutonReset from 'components/Inscription/BoutonReset';
-//import BoutonConnexion from '/components/Connection/BoutonConnexion';
 import Prenom from '/components/Inscription/Prenom';
 import Nom from '/components/Inscription/Nom';
 import Password from '/components/Connection/Password';
 import Email from '/components/Connection/Email';
-//import { saveUserServerSideProps } from '/components/ServerProps/getUsersServerSideProps';
+import { saveUserServerSideProps } from '/components/ServerProps/saveUserServerSideProps';
 
-import { saveUser } from '/server/config/mongo/users';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-//import { useInscriptionForm } from '/components/Inscription/useInscriptionForm';
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import BoutonInscription from '@/components/Inscription/BoutonInscription';
+
+const handler = async (req, res) => {
+  if (req.method === 'POST') {
+    try {
+      const { email, password, firstName, lastName } = req.body;
+      const newUser = {
+        email,
+        password,
+        firstName,
+        lastName,
+        commandes: [],
+        __v: 0,
+      };
+      const { success, error } = await saveUser(newUser);
+      if (error) throw new Error(error);
+
+      return res.status(200).json({ success });
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  }
+
+  res.setHeader('Allow', ['POST']);
+  res.status(405).end(`Method ${req.method} is not allowed.`);
+};
 
 export default function Inscription({ users }) {
   const [usersServerSide, setusersServerSide] = useState(users || []);
@@ -61,22 +81,17 @@ export default function Inscription({ users }) {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     setErrorMessage('');
-
-    // Check if the email already exists in the users list
     const account = usersServerSide.find((user) => user.email === email);
     if (account) {
-      setErrorMessage('Les informations correspond a un compte déjà existant.');
-      toast.error('Les informations correspond a un compte déjà existant.', {
+      setErrorMessage(`Les informations correspond a un compte déjà existant.`);
+      toast.error(`Les informations correspond a un compte déjà existant.`, {
         hideProgressBar: true,
         autoClose: 2000,
         type: 'error',
         position: toast.POSITION.TOP_LEFT,
       });
       return;
-    }
-
-    // Check if the password and confirm password match
-    if (confirmPassword !== password) {
+    } else if (confirmPassword !== password) {
       setErrorMessage(
         'Le mot de passe ne correspond pas a celui que vous avez confirmé.'
       );
@@ -89,12 +104,10 @@ export default function Inscription({ users }) {
           position: toast.POSITION.TOP_LEFT,
         }
       );
-      return;
     }
-
-    // Check if the form is valid
-    checkFormValidity();
+    checkFormValidity(); // add this line to check if the form is valid
     if (!isFormValid) {
+      //setErrorMessage('Veuillez remplir tous les champs correctement.');
       toast.error('Veuillez remplir tous les champs correctement.', {
         hideProgressBar: true,
         autoClose: 2000,
@@ -102,41 +115,64 @@ export default function Inscription({ users }) {
         position: toast.POSITION.TOP_LEFT,
       });
       return;
-    }
+    } else if (!account && confirmPassword === password) {
+      const userData = { lastName, firstName, email, password };
 
-    // Save the user if the form is valid and passwords match
-    const userData = { lastName, firstName, email, password };
-    localStorage.setItem('token-info', JSON.stringify(userData));
-    localStorage.setItem('isLoggedin', 'true');
-    setIsLoggedin(true);
-    setFirstName(firstName);
-    setLastName(lastName);
-    setEmail(email);
-    setPassword('');
-    setConfirmPassword('');
-    /*
-    try {
-      const existingUser = await users.findOne({ username: users.username });
-      if (existingUser) {
-        setErrorMessage("L'utilisateur existe déjà");
-        return;
+      try {
+        const response = await fetch('/api/mongo/userSave', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(userData),
+        });
+        const data = await response.json();
+        console.log(data);
+        // Handle success or error response here
+      } catch (error) {
+        console.error(error);
+        // Handle error here
+      }
+      localStorage.setItem('token-info', JSON.stringify(userData));
+      localStorage.setItem('isLoggedin', 'true');
+      setIsLoggedin(true);
+      if (account) {
+        setFirstName(account.firstName);
+        setLastName(account.lastName);
+        setEmail(account.email);
+        setPassword('');
+      } else {
+        setFirstName(firstName);
+        setLastName(lastName);
+        setEmail(email);
       }
 
-      await saveUser(userData);
-    } catch (error) {
-      setErrorMessage('Failed to save user!');
-      return;
+      setPassword('');
+      setConfirmPassword('');
+      setErrorMessage('');
+      toast.success(
+        `Félicitations ! Vous êtes maintenant inscrit à Animago. Profitez pleinement de notre plateforme pour découvrir nos contenus exclusifs et participer à notre communauté passionnée`,
+        {
+          hideProgressBar: true,
+          autoClose: 5000,
+          type: 'success',
+          position: toast.POSITION.TOP_LEFT,
+        }
+      );
+    } else if (confirmPassword !== password) {
+      setErrorMessage(
+        'Le mot de passe ne correspond pas a celui que vous avez confirmé.'
+      );
+      toast.error(
+        'Le mot de passe ne correspond pas a celui que vous avez confirmé.',
+        {
+          hideProgressBar: true,
+          autoClose: 2000,
+          type: 'error',
+          position: toast.POSITION.TOP_LEFT,
+        }
+      );
     }
-*/
-    toast.success(
-      'Félicitations ! Vous êtes maintenant inscrit à Animago. Profitez pleinement de notre plateforme pour découvrir nos contenus exclusifs et participer à notre communauté passionnée',
-      {
-        hideProgressBar: true,
-        autoClose: 5000,
-        type: 'success',
-        position: toast.POSITION.TOP_LEFT,
-      }
-    );
   };
 
   useEffect(() => {
@@ -287,30 +323,4 @@ export default function Inscription({ users }) {
   );
 }
 
-export async function getServerSideProps() {
-  try {
-    const { users } = await saveUser();
-    const existingUser = await users.findOne({ username: user.username });
-    if (existingUser) {
-      return {
-        props: {
-          error: 'User already exists!',
-        },
-      };
-    }
-
-    return {
-      props: {
-        success: `User with id ${result.insertedId} was successfully saved.`,
-      },
-    };
-  } catch (error) {
-    return {
-      props: {
-        error: 'Failed to save user!',
-      },
-    };
-  }
-}
-
-//export { saveUserServerSideProps as getServerSideProps };
+export { saveUserServerSideProps as getServerSideProps };
