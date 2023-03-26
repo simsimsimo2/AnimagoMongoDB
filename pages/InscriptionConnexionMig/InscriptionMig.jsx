@@ -1,5 +1,3 @@
-import { Inter } from '@next/font/google';
-const inter = Inter({ subsets: ['latin'] });
 import styles from '/styles/Inscription.module.css';
 import ConfirmPassword from '/components/Inscription/ConfirmPassword';
 import BoutonReset from 'components/Inscription/BoutonReset';
@@ -302,7 +300,7 @@ export default function Inscription({ users }) {
                 <label className={styles.label}>
                   Oups! On dirais que vous êtes déjà connecté(e),
                   {` ${firstName} 
-                  ${lastName} (${email})`}
+                ${lastName} (${email})`}
                   . Voulez-vous vous déconnecter ou retourner à l&apos;accueil?
                 </label>
               </div>
