@@ -1,9 +1,6 @@
-import { Inter } from '@next/font/google';
 import styles from '/styles/Contact.module.css';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-
-const inter = Inter({ subsets: ['latin'] });
 
 export default function Contact() {
   return (
@@ -22,7 +19,7 @@ export default function Contact() {
               </ul>
             </div>
             <div className={styles.divGrid}>
-              <p className={styles.horaire}>Horaires d'ouvertures</p>
+              <p className={styles.horaire}>Horaires d&apos;ouvertures</p>
               <ul className={styles.ul}>
                 <li>Lun - Ven : 7h00 - 22h00 </li>
                 <li>Samedi : 8h - 22h</li>
@@ -40,7 +37,7 @@ export default function Contact() {
               </ul>
             </div>
             <div className={styles.divGrid}>
-              <p className={styles.horaire}>Horaires d'ouvertures</p>
+              <p className={styles.horaire}>Horaires d&apos;ouvertures</p>
               <ul className={styles.ul}>
                 <li>Lun - Ven : 7h00 - 22h00 </li>
                 <li>Samedi : 8h - 22h</li>
@@ -58,7 +55,7 @@ export default function Contact() {
               </ul>
             </div>
             <div className={styles.divGrid}>
-              <p className={styles.horaire}>Horaires d'ouvertures</p>
+              <p className={styles.horaire}>Horaires d&apos;ouvertures</p>
               <ul>
                 <li>Lun - Ven : 7h00 - 22h00 </li>
                 <li>Samedi : 8h - 22h</li>

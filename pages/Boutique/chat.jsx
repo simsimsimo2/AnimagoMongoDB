@@ -1,6 +1,4 @@
-import { Inter } from '@next/font/google';
 import React, { useState, useEffect } from 'react';
-const inter = Inter({ subsets: ['latin'] });
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import ProduitListe from '../../components/produit/ProduitListe';
@@ -19,9 +17,10 @@ export default function Chat({ paniers }) {
     getPurchaseQuantity,
     getRemainingStock,
   ] = useCart(paniers);
+
   useEffect(() => {
     initCart();
-  }, [paniers]);
+  }, [paniers, initCart]);
 
   const [visibleState, setVisible] = useState(false);
   const toggler = () => {
