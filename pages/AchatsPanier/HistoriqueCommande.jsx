@@ -11,10 +11,16 @@ import styles from '/styles/Cart.module.css';
 const inter = Inter({ subsets: ['latin'] });
 
 export default function HistoriqueCommande({ purchaseDate, orders }) {
+  let userInfo;
+  if (typeof window !== 'undefined') {
+    userInfo = localStorage.getItem('token-info');
+  }
+  const { orderString } = userInfo ? JSON.parse(userInfo) : {};
+
   const [orderHistory, setOrderHistory] = useState(orders);
   let cart = [];
 
-  //console.log("Orders in string passing from the current cart", orders);
+  // console.log('Orders in string passing from the current cart', orders);
 
   if (typeof orders === 'string') {
     try {
@@ -25,7 +31,8 @@ export default function HistoriqueCommande({ purchaseDate, orders }) {
   }
   // console.log("Cart in string ", cart);
 
-  // console.log("Order History in string ", orderHistory);
+  //console.log('Order History in string ', orderHistory);
+  //console.log('Order History in string ', orderString);
   return (
     <>
       <Header />
